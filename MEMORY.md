@@ -8,3 +8,4 @@ Note: this is the prose-memory index only. For confirmed, reusable facts, use `n
 - [Growth plan](memory/growth-plan.md) — scope history, the Markey boundary, not yet actioned expansions
 - [EP06 research subfolder template](memory/ep06-research-subfolder-template.md) — sources/research/ made permanent in episode template via PR #12, 6 August 2026
 - [EP06 ledger Claims 024-033](memory/ep06-ledger-024-033-empire-corroboration.md) — PR #13, nine new empire/sovereignty sources + the Bremmer transcript, DuckDuckGo html search fallback for WebFetch, flagged the two-part split may not hold
+- [EP06 ledger Show fit field](memory/ep06-ledger-show-fit-field.md) — PR #13 follow-up commit, editorial accessibility filter per Kevin, `gh api -F content=@file` fixes Windows argv-length limit on large base64 pushes
