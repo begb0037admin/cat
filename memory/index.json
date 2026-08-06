@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "id": "2026-08-06-episode-folder-provisioning-script-is-on-github-not-local-only",
+    "date": "2026-08-06",
+    "title": "ai-news-channel episode-folder-provisioning script is committed to GitHub, not local-only",
+    "fix": "The episode-folder provisioning tool (Prepare-EpisodeFolders.ps1 + its Prepare_Episode_Folders.bat launcher, plus README.md) lives at 03_Spotify_Podcast/tools/episode-sync/ in begb0037admin/ai-news-channel and IS version-controlled on GitHub main — contrary to an assumption that it might be local-clone-only. As of PR #12 (6 Aug 2026) the standard folder template it provisions is 8 entries: artwork, audio, editorial, metadata, notebooklm, sources, sources\\research, transcript. The script is idempotent (safe to re-run) and Windows-local-execution-only — GitHub edits to it don't retroactively create folders in existing episodes until it's run again on the Windows machine.",
+    "confirmed_via": "gh api search/code across begb0037admin/ai-news-channel plus direct GitHub Contents API GET/PUT on 03_Spotify_Podcast/tools/episode-sync/Prepare-EpisodeFolders.ps1, Prepare_Episode_Folders.bat, and README.md — all three read and edited successfully on main via PR #12 (https://github.com/begb0037admin/ai-news-channel/pull/12)",
+    "tags": ["ai-news-channel", "episode-template", "github-verification"],
+    "source_run": "EP06 research-discovery-prompt template change (sources/research/ subfolder), follow-up to EP06 evaluation/NotebookLM prompt drafting",
+    "status": "active",
+    "superseded_by": null
+  }
+]
