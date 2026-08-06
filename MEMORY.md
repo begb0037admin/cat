@@ -9,3 +9,4 @@ Note: this is the prose-memory index only. For confirmed, reusable facts, use `n
 - [EP06 research subfolder template](memory/ep06-research-subfolder-template.md) — sources/research/ made permanent in episode template via PR #12, 6 August 2026
 - [EP06 ledger Claims 024-033](memory/ep06-ledger-024-033-empire-corroboration.md) — PR #13, nine new empire/sovereignty sources + the Bremmer transcript, DuckDuckGo html search fallback for WebFetch, flagged the two-part split may not hold
 - [EP06 ledger Show fit field](memory/ep06-ledger-show-fit-field.md) — PR #13 follow-up commit, editorial accessibility filter per Kevin, `gh api -F content=@file` fixes Windows argv-length limit on large base64 pushes
+- [EP06 split into EP06/EP07/EP08](memory/ep06-split-into-ep06-ep07-ep08-renumber.md) — PR #14, splits the 33-claim ledger into two episodes per Kevin/Hope's decision, resolves the open question PR #13 flagged; verbatim-splitting method, Windows git-clone longpaths gotcha
