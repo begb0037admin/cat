@@ -1,0 +1,21 @@
+---
+name: ep06-split-into-ep06-ep07-ep08-renumber
+description: "PR #14: split EP06_The_AI_Empire's 33-claim ledger into two episodes (new EP06 + new EP07), old EP07 jobs episode renumbered to EP08; resolves the open question flagged in PR #13's memory entry"
+type: decision
+---
+
+Follow-up to `memory/ep06-ledger-024-033-empire-corroboration.md`, which flagged as an open editorial question (not decided there, deliberately left to Hope): "whether EP06's original two-part split still holds now that the evidence base has grown." Kevin/Hope's answer, 6 August 2026: split it into two full episodes. Result: **PR https://github.com/begb0037admin/ai-news-channel/pull/14** (branch `cat/ep06-ep07-episode-split` off `main`), open, draft, **not merged** — Kevin/Hope need to review the claim-by-claim split before it locks in.
+
+**The split:**
+- **New `EP06_Is_Anyone_Still_In_Control/`** (proposed title, alternative "The G-Zero World" also offered) — geopolitical/governance thread, direct follow-on from EP05. 19 of the original 33 claims, renumbered 001-019 with original numbers preserved per-heading, plus a new Claim 000 recap pointing back to EP05 (mirroring EP05's own Claim 000 recap of EP04).
+- **New `EP07_AI_Empires/`** (title kept close to original, per Kevin's explicit direction) — corporate/labor/extraction thread (Karen Hao's "empire" framing). 14 of the original 33 claims, renumbered 001-014.
+- `EP07_AI_Will_Take_These_Jobs_First` renumbered a second time same-day to **EP08** (its second renumber in one day — first EP06→EP07 in PR #11, now EP07→EP08 here), since the split needed both EP06 and EP07 slots. No content changed, only numbers/paths/internal references.
+- The two `sources/research/` discovery prompts split by their own content: Part 1 (Hao/empire) → EP07; Part 2 (Kokotajlo/Bremmer geopolitical) → EP06.
+
+**Method — reliable verbatim claim-splitting at scale:** downloaded the 33-claim ledger, used a Python script (not manual retyping) to extract each `### Claim NNN` block by exact line-number boundaries (found via `grep -n "^#"`), then reassembled into two new files with programmatic heading renumbering (`### Claim 004 (originally Claim 011)`) and **automatic in-body cross-reference renumbering** (a claim's caveat saying "see Claim 010" needed to become "see Claim 003" if both claims moved to the same new file, or needs a manual rewrite if the referenced claim moved to the *other* file — the script only auto-fixes same-file refs via a full old-number→new-number dict per file; cross-file refs are left as original numbers and must be hand-checked, found two real instances this way, one in each file). This prevented transcription drift on ~500 lines of verified sourcing that must not be silently altered — a sort, not a re-verification, and the tooling enforces that distinction.
+
+**One judgment call overriding the task's own rough-split suggestion:** Claim 028 (Lehdonvirta's *Cloud Empires* — "platforms overtaking the state") was moved to the geopolitical/EP06 file despite the task brief's rough list placing it with the extraction/EP07 claims. Its actual thesis (state-like power, no democratic accountability) is a sovereignty argument, not an extraction one — flagged explicitly in the PR description and in-ledger for Kevin/Hope to confirm or override, not decided quietly.
+
+**Windows git clone gotcha, confirmed again:** cloning this repo with default `git clone` hits "Filename too long" on deeply-nested artwork asset paths (`03_Spotify_Podcast/tools/episode-artwork/Episodes/...`) — fixed by `git config core.longpaths true` then `git reset --hard HEAD` inside the partially-checked-out clone (not `git checkout --`, which failed with "pathspec '.' did not match" against a `HEAD` that had deleted-looking entries from the aborted checkout). Ephemeral clone in the scratchpad temp dir, not `C:\Users\...\Documents\...` — deleted after the branch was pushed, consistent with the "GitHub API/write, not a persistent local clone" preference; a git clone used only as a throwaway workspace for one branch-and-push operation is not the same failure mode as a standing local mirror that drifts.
+
+See also: `memory/ep06-ledger-024-033-empire-corroboration.md` and `memory/ep06-ledger-show-fit-field.md` for the claims' prior history before this split.
