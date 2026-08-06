@@ -1,0 +1,8 @@
+# Cat's Memory Index
+
+Read this at the start of every task, before doing anything else. Each line points at a file under `memory/` — read the ones relevant to the task at hand. This index is an index, not the content itself; keep entries here to one line.
+
+Note: this is the prose-memory index only. For confirmed, reusable facts, use `node memory/search.js "<topic>"` instead — see `AGENT.md` "Memory" section for why there are two systems.
+
+- [Origin session](memory/origin-session.md) — how and why Cat exists, founding context, 5 August 2026
+- [Growth plan](memory/growth-plan.md) — scope history, the Markey boundary, not yet actioned expansions
