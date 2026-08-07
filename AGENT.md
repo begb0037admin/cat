@@ -62,6 +62,7 @@ Not everything needs a memory entry — a routine task that didn't surface anyth
 2. Cat's own `MEMORY.md` + relevant `memory/*.md` entries.
 3. `node memory/search.js "<topic>"` for confirmed facts, plus a check of `agent-commons`.
 4. Before touching anything under a voice/chat heading in `aimm/index.html` (search `========== ELEVENLABS` or `REALTIME VOICE`), stop — that's Markey's, not yours, regardless of how small the change looks.
+5. **If the task touches a local clone of `ai-news-channel` (this repo has a real local working copy in addition to GitHub, unlike most of Kevin's other repos):** identify which local path is actually in use before doing anything else — Kevin has more than one clone on the Mac at different times (a stray `~/Projects/ai-news-channel` and the canonical one on `/Volumes/ExternalStorage/Hope in AI/ai-news-channel`, confirmed 2026-08-07). Never assume a path from a prior session; check `pwd`/`git remote -v` and confirm with Kevin if more than one candidate exists.
 
 Do not skip straight to the task. A stale mental model produces confident-sounding wrong answers, which is worse than admitting you haven't checked.
 
@@ -72,6 +73,8 @@ Do not skip straight to the task. A stale mental model produces confident-soundi
 **GitHub is the primary working surface, but not all source data is GitHub-hosted.** `aimm`'s `versions/` folder (Cowork's local artifact history) is gitignored and not authoritative — never diff or edit against it. Some AIMM session work happens via Cowork on Kevin's local machine; verify what's actually landed in the repo rather than assuming a described local change is live.
 
 **Show → Approve → Push for anything consequential.** No pushes without Kevin's explicit approval first. Cat's own memory writes (this repo) are low-stakes in the same way documentation is — proceed and report, don't ask permission for every memory commit. Any change to `aimm/index.html` or `ai-news-channel` production assets needs a show-first step: never push it without Kevin seeing the diff and approving explicitly. `aimm` additionally has its own commit convention (batch into one end-of-session commit, don't prompt for commits mid-session, exceptions only when Kevin asks or before something genuinely risky) — follow it as written in `aimm/CLAUDE.md`, don't default back to this template's more general pattern.
+
+**Proactively surface git sync state — don't wait to be asked.** Added 2026-08-07, after a session on `ai-news-channel` where Kevin lost track of which local clone was current (there were two), which files were committed versus sitting locally-only and unpushed, and how git sync actually works end to end — none of which surfaced until he asked directly, several turns in. At the start of any task touching a local clone, and again before ending the session, state plainly and without being asked: which local path is in use, which branch it's on, how it compares to `origin/<branch>` (ahead/behind/diverged/identical), and a concrete list of anything uncommitted or unpushed at that path. Never assume Kevin remembers git mechanics (add/commit/push, what "local" versus "GitHub" actually means) from an earlier conversation — restate the live state in plain terms every time it's relevant, not just when asked "is this synced?"
 
 **Document before finishing.** Keep `aimm/docs/STATUS.md`, `docs/ROADMAP.md`, `DASHBOARD.html` (all three, reflexively, per `aimm/CLAUDE.md`'s own non-negotiable maintenance triggers) and/or `ai-news-channel`'s `STATUS.md`/`HANDOVER.md` current, plus this repo's `MEMORY.md`.
 
@@ -96,7 +99,8 @@ Do not skip straight to the task. A stale mental model produces confident-soundi
 - **Never assume a local-machine source is available.** `aimm` session work sometimes happens via Cowork on Kevin's Mac (`~/Documents/Claude/Artifacts/aimm/`); if it isn't reachable in a given session, say so rather than substituting stale or fabricated data.
 - **Never build ahead of the stated priority order** without Kevin explicitly reprioritizing.
 - **Never report a status without a fresh, live re-check, and never leave a completed dispatch/handoff unreported.** Per `CONSTITUTION.md` Section 12 — no exceptions for "it was probably still running" or "I hadn't gotten to checking yet."
+- **Never let a git sync question go unanswered or unsurfaced.** Per the sync non-negotiable above — if Kevin could reasonably wonder "is this on GitHub yet?", say so before he has to ask.
 
 ## Reporting back
 
-State plainly what was verified directly versus what was inferred or taken from documentation. If something couldn't be checked, say that rather than presenting it with the same confidence as something that was. Cite concrete evidence — file path, a commit SHA, an actual value observed — not just a conclusion.
+State plainly what was verified directly versus what was inferred or taken from documentation. If something couldn't be checked, say that rather than presenting it with the same confidence as something that was. Cite concrete evidence — file path, a commit SHA, an actual value observed — not just a conclusion. When a local clone was involved, always include its git sync state (path, branch, ahead/behind origin, uncommitted files) as part of the report, not only when asked.
