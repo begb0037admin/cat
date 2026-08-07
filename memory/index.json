@@ -5,8 +5,30 @@
     "title": "ai-news-channel episode-folder-provisioning script is committed to GitHub, not local-only",
     "fix": "The episode-folder provisioning tool (Prepare-EpisodeFolders.ps1 + its Prepare_Episode_Folders.bat launcher, plus README.md) lives at 03_Spotify_Podcast/tools/episode-sync/ in begb0037admin/ai-news-channel and IS version-controlled on GitHub main — contrary to an assumption that it might be local-clone-only. As of PR #12 (6 Aug 2026) the standard folder template it provisions is 8 entries: artwork, audio, editorial, metadata, notebooklm, sources, sources\\research, transcript. The script is idempotent (safe to re-run) and Windows-local-execution-only — GitHub edits to it don't retroactively create folders in existing episodes until it's run again on the Windows machine.",
     "confirmed_via": "gh api search/code across begb0037admin/ai-news-channel plus direct GitHub Contents API GET/PUT on 03_Spotify_Podcast/tools/episode-sync/Prepare-EpisodeFolders.ps1, Prepare_Episode_Folders.bat, and README.md — all three read and edited successfully on main via PR #12 (https://github.com/begb0037admin/ai-news-channel/pull/12)",
-    "tags": ["ai-news-channel", "episode-template", "github-verification"],
+    "tags": [
+      "ai-news-channel",
+      "episode-template",
+      "github-verification"
+    ],
     "source_run": "EP06 research-discovery-prompt template change (sources/research/ subfolder), follow-up to EP06 evaluation/NotebookLM prompt drafting",
+    "status": "active",
+    "superseded_by": null
+  },
+  {
+    "id": "2026-08-07-gh-api-f-content-process-substitution-fails-silently-ish-on-windows-git-bash-write-to-a-real-temp-file-instead",
+    "date": "2026-08-07",
+    "title": "gh api -F content=@<(process substitution) fails silently-ish on Windows Git Bash — write to a real temp file instead",
+    "fix": "On Windows Git Bash, `gh api -F field=@<(...)` (process substitution) does not work — gh tries to open the `/proc/<pid>/fd/NN` path directly and Windows can't resolve it, even though the same `<(...)` works fine for other commands. Always write process-substitution-style intermediate content (e.g. base64-encoded file bodies for Contents API PUTs) to a real temp file on disk first, then reference it with `-F field=@realfile`. This is on top of the already-known `-F` vs `-f` distinction (capital `-F` for `@file` reads) and the base64-encoding-required-for-blobs rule — this is a third, independent gotcha about `<(...)` specifically, not just about `-f` vs `-F` or encoding.",
+    "confirmed_via": "On this Windows machine's Git Bash (Bash tool), `gh api --method PUT repos/OWNER/REPO/contents/PATH -F content=@<(base64 -w0 file.md)` returned `error parsing \"content\" value: open /proc/<pid>/fd/63: The system cannot find the path specified.` for all four files attempted in one loop (ai-news-channel PR #22). Rewriting the same loop to `base64 -w0 file.md > file.md.b64` then `-F content=@file.md.b64` succeeded on the first try for all four, verified via each PUT response's `commit.sha` plus a follow-up Contents API GET diffed against the intended text.",
+    "tags": [
+      "gh-cli",
+      "github-api",
+      "windows",
+      "git-bash",
+      "process-substitution",
+      "contents-api"
+    ],
+    "source_run": "begb0037admin/cat, ai-news-channel PR #22 (EP06/EP07 Approval status + EP06-EP08 QA report episode-number fixes), 7 August 2026",
     "status": "active",
     "superseded_by": null
   }
