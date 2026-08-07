@@ -1,0 +1,20 @@
+---
+name: ep07-to-ep06-175b-10t-refile
+description: "PR #17: re-filed the '175B->10T parameters' flagged claim from EP07 to EP06 per Kevin's PR #14 review; confirmed gh api git/blobs -f content=@file silently sends the literal string, not file contents"
+metadata:
+  node_type: memory
+  type: project
+  modified: 2026-08-07
+---
+
+Direct follow-up to `memory/ep06-split-into-ep06-ep07-ep08-renumber.md`. That PR (#14) flagged three judgment calls for Kevin/Hope to confirm or override. Kevin's answers: Lehdonvirta's *Cloud Empires* claim stays in EP06, the Nov 2023 OpenAI board crisis claims stay in EP07, and the "175 billion parameters (2020) to ~10 trillion parameters (currently)" claim moves from EP07 to EP06. Result: **PR https://github.com/begb0037admin/ai-news-channel/pull/17** (branch `cat/ep06-refile-175b-10t-claim` off `main`), open, not yet merged.
+
+**What moved and why it wasn't a renumbering:** confirmed via `git show` on the pre-split commit (`32bb021`, the original combined `EP06_The_AI_Empire` ledger before PR #14) that this claim never had a `### Claim NNN` heading — it lived unnumbered in an "Still flagged — genuinely need Hope's original source list" section in the original ledger, and PR #14 carried it into EP07's ledger the same way, unnumbered, plus added its own placement-uncertainty sentence ("filed here as a judgment call... flag for Hope to confirm"). Since it was never numbered, moving it required no renumbering of either file's numbered claims and no claim-count correction — worth checking claim-numbering status before assuming a "move claim X" task means renumbering.
+
+**Caveat preserved verbatim, placement-uncertainty sentence dropped:** the substantive "appears inflated... recommend dropping this figure or re-sourcing it precisely before use" caveat was copied byte-for-byte per Kevin's explicit instruction not to drop the warning. The *separate* sentence PR #14 had added — "filed here as a judgment call, not a confident placement... flag for Hope to confirm" — was dropped on the move, since that sentence's entire purpose was flagging the exact question Kevin's review just answered; keeping it would have left a stale "still needs confirming" note on an already-confirmed placement. Placed in EP06 near Claim 005 (originally Claim 012), the AI 2027 compute forecast — the actual compute-scaling thread, per the task's own framing.
+
+**Confirmed gotcha — `gh api git/blobs -f content=@file` does not read the file.** Tried `gh api repos/.../git/blobs -f content=@EP06_ledger.md -f encoding=utf-8` first; it silently succeeded but the resulting blob's content was the literal 15-character string `@EP06_ledger.md`, not the file's contents (caught by fetching the blob back and checking `.size`/`.content` — always verify a blob write this way, don't trust the create call's 200 response alone). Fix: base64-encode the file to a separate `.b64` file first, then `gh api ... -F content=@file.b64 -f encoding=base64` — `-F` (capital, "typed" flag) honors `@file` for a raw read; `-f` did not in this `gh` version. Also confirmed: building a multi-entry Git Data API tree via repeated `-F "tree[][path]=..." -F "tree[][mode]=..."` flags does NOT correctly pair fields into separate array objects (got `Must supply a valid tree.mode` even though mode was supplied) — had to write the full tree JSON to a file and use `gh api ... --input tree_payload.json` instead. Both gotchas are `gh` CLI behavior, not GitHub API behavior — worth checking `agent-commons` before assuming either is repo-specific.
+
+**Method — same atomic-multi-file Git Data API pattern as PR #16**, but this time two *different* files needed edits (EP06 ledger gains the item, EP07 ledger loses it) — a legitimate case for the tree-rebuild method rather than the simpler Contents API PUT noted as the better default for single-file edits in `memory/status-handover-pr14-15-staleness-fix.md`.
+
+See also: `memory/ep06-split-into-ep06-ep07-ep08-renumber.md` (the PR #14 split this follows up on) and `memory/status-handover-pr14-15-staleness-fix.md` (the Contents-API-vs-tree-method note this confirms the flip side of).
