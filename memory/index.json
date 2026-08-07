@@ -48,5 +48,23 @@
     "source_run": "Cat, ai-news-channel PR #25 (EP06/EP07 Master Source, Chat Chunks, Audio Overview Prompt)",
     "status": "active",
     "superseded_by": null
+  },
+  {
+    "id": "2026-08-07-episode-artwork-font-path-must-be-os-detected-never-trusted-from-shared-config",
+    "date": "2026-08-07",
+    "title": "episode-artwork font path must be OS-detected, never trusted from shared config",
+    "fix": "03_Spotify_Podcast/tools/episode-artwork/episode_template_config.json is read AND written by both the Windows (.bat) and Mac (.command) launchers, so any OS-specific absolute path saved into it (e.g. \"font\") will break the other OS next time it runs. The fix pattern: never hardcode an OS path in a config file shared by both platforms — instead have the script itself branch on platform.system() (\"Darwin\" vs \"Windows\") and only trust a config-supplied override if Path(...).is_file() is true on the current machine. Applies to any other cross-platform path fields this tool (or similar shared-config tools in this repo) might grow later — e.g. font, but the same logic would apply to any hardcoded filesystem path.",
+    "confirmed_via": "PR #26 on begb0037admin/ai-news-channel — ran the fixed render_episode_template.py directly on this Windows machine three ways: (1) config \"font\" blank -> resolved to C:\\WINDOWS\\Fonts\\impact.ttf, exit 0; (2) config \"font\" forced to the stale Mac path /System/Library/Fonts/Supplemental/Impact.ttf that doesn't exist on Windows (the exact original bug) -> no longer crashes, correctly falls through to the Windows path; (3) config \"font\" forced to a valid existing Windows path -> respected. All three exit 0, verified via layer-manifest.json and printed Font: line. Mac (Darwin) branch not tested live (no Mac available) — verified by code review only, byte-identical to the prior unconditional default path.",
+    "tags": [
+      "ai-news-channel",
+      "episode-artwork",
+      "windows-mac",
+      "cross-platform",
+      "font",
+      "config"
+    ],
+    "source_run": "Cat task 2026-08-07 — fix episode-artwork Impact font path bug (PR #26)",
+    "status": "active",
+    "superseded_by": null
   }
 ]
