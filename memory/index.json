@@ -31,5 +31,22 @@
     "source_run": "begb0037admin/cat, ai-news-channel PR #22 (EP06/EP07 Approval status + EP06-EP08 QA report episode-number fixes), 7 August 2026",
     "status": "active",
     "superseded_by": null
+  },
+  {
+    "id": "2026-08-07-gh-pr-create-fails-with-you-must-first-push-the-current-branch-right-after-a-successful-git-push-u-pass-repo-base-head-explicitly",
+    "date": "2026-08-07",
+    "title": "gh pr create fails with \"you must first push the current branch\" right after a successful git push -u — pass --repo/--base/--head explicitly",
+    "fix": "If `gh pr create` claims a branch isn't pushed right after a push that visibly succeeded, don't retry the push — add explicit `--repo OWNER/REPO --base main --head <branch>` flags to `gh pr create` instead. `gh`'s local tracking-ref detection can be unreliable on this machine even when the remote branch and commits are genuinely present.",
+    "confirmed_via": "On this Windows machine (Git Bash), after `git push -u origin cat/ep06-ep07-master-source-notebooklm-chunks` succeeded (branch visibly created on GitHub, `git branch -vv` output notwithstanding showed no tracking ref recorded locally), a plain `gh pr create --title ... --body ...` immediately failed with `aborted: you must first push the current branch to a remote, or use the --head flag`. Re-running with `gh pr create --repo begb0037admin/ai-news-channel --base main --head cat/ep06-ep07-master-source-notebooklm-chunks --title ... --body ...` succeeded on the first try (ai-news-channel PR #25).",
+    "tags": [
+      "gh-cli",
+      "git",
+      "windows",
+      "pull-request",
+      "ai-news-channel"
+    ],
+    "source_run": "Cat, ai-news-channel PR #25 (EP06/EP07 Master Source, Chat Chunks, Audio Overview Prompt)",
+    "status": "active",
+    "superseded_by": null
   }
 ]
