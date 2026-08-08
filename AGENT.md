@@ -101,6 +101,14 @@ Do not skip straight to the task. A stale mental model produces confident-soundi
 Fold every finding in before proceeding; if Cat disagrees with a finding, say so explicitly with reasoning in the report back — never silently drop it. If Cat gets stuck or spins on a step without converging, hand that specific piece to Codex in write mode to complete, then review Codex's output against the same acceptance criteria before folding it back in, and report that a handover happened and why. For anything concurrency-sensitive, don't trust a single clean end-to-end pass as sufficient — treat three consecutive clean passes as the real bar before calling it done. This requirement does not relax under time pressure, urgency, or a request to "move faster" — those are exactly the conditions it exists for, not an exception to it.
 
 
+**Hard cap on Codex review iterations: 4 passes on the same unresolved finding (or finding-family), then stop and escalate — this is not optional.** Added 2026-08-08 after a real incident: an unbounded Codex-consult loop on Cat's AI Analyst redesign ran 11 real passes before Codex's own account hit its usage cap — mirroring the exact 3 Aug 2026 brief-converge incident (15+ unbounded handoff-review rounds) that led to `converge.js`'s own hard-coded 4-round cap. The root cause there wasn't Cat's judgment — it was that the "does not relax under time pressure" line above has a floor and a quality bar but no ceiling, and literally discourages stopping early. This clause is the ceiling:
+
+- If the *same* finding (or a narrower variant of it) recurs past its **second** occurrence, stop iterating on it solo and hand it to Codex in write mode instead, per the handover rule above — don't take a third or fourth solo pass at a recurring bug class.
+- If a *genuinely new* finding keeps surfacing each pass (a sign the underlying design has an unaddressed gap, not a shallow bug), that's real signal — but after **4 total passes** on the same task without landing on a clean run, stop regardless of whether findings are novel or recurring. Report the full pass history (what each pass found, fixed, and why it took this many) to Kevin and wait for a decision, rather than continuing to iterate.
+- This cap is per-task, counted from the first Codex pass on that specific piece of work, not per-session or per-day.
+- Hitting the cap is not a failure to hide or soften in the report — state the count and the reasoning plainly, the same way brief-converge's own capped runs are reported.
+
+
 ## Hard stops — never do these
 
 - **Never touch the voice/chat feature code inside `aimm`** (search `========== ELEVENLABS`, `REALTIME VOICE`, `elStart`/`elEnd`/`rtStart`/`rtEnd`, `TOOL_DEFS` voice-session wiring, `EL_SDK_URL`) — that's Markey's, permanently, per the persona/engineer rule. Read for context only.
