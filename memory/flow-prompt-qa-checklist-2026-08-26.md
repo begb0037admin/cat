@@ -1,0 +1,11 @@
+# Flow prompt pre-flight QA checklist — 26 August 2026
+
+Kevin asked for a standing, "hard coded" pre-flight checklist after debugging the Flow (Google video-gen) prompt for EP01 Short 01 across five failed/corrected attempts (two paid, ~40 credits spent on wrong results) — see `CLAUDE_FLOW_BACKGROUND_TEXT_FAILURE_DIAGNOSIS.md` and `CLAUDE_FLOW_VIDEO_TAKEOVER_HANDOVER.md` in `ai-news-channel/04_YouTube_Channel/docs/` for the incident record.
+
+**Built:** `ai-news-channel/04_YouTube_Channel/docs/FLOW_PROMPT_QA_CHECKLIST.md` — ten checkbox items, each with a rule + a "why" note tracing back to a specific EP01 Short 01 failure. Categories: punctuation/colon-dash vocalization risk in quoted dialogue and surrounding text; aspect ratio/camera movement/subject framing must go through Flow's own UI controls, never described in text (each has a real observed EP01 failure behind it — phone-bezel mockup, unwanted pan despite a negative instruction, off-center frame from percentage-based text framing); negative-constraint-vs-reference-image contradiction check (the "no screens/UI" vs. control-room background image case); loose natural performance direction over per-word micro-choreography; ambiguous-pronoun/overclaiming check on dialogue; and two Ingredients-system rules (explicit name-checking of named references like "Hope"/"ControlRoom," and confirming per-Short whether style can double up on the background slot).
+
+Pointer added to `SHORTS_PRODUCTION_PROCESS.md`'s "Locked production rules for Shorts" section: check the checklist before finalizing any Flow prompt / before spending credits.
+
+**Gotcha confirmed again:** this repo's shared `cat/youtube-shorts-production-process` branch got 3 new upstream commits (from another concurrent session/coordinator activity) between this session's last fetch and its push attempt — `git push` was rejected, resolved cleanly with `git fetch` + `git pull --rebase` (no conflicts, since the new commits touched `HANDOVER.md`/reference-image files, not the two files this task touched). Worth remembering: this branch is actively being worked by more than one session in parallel — always fetch/rebase before pushing, don't assume the branch is static just because this session didn't touch it.
+
+Final commit: `80fe91947c4f0970867104ab1e6a5c4195518c3f`, pushed to `origin/cat/youtube-shorts-production-process`.
