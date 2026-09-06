@@ -66,5 +66,23 @@
     "source_run": "Cat task 2026-08-07 — fix episode-artwork Impact font path bug (PR #26)",
     "status": "active",
     "superseded_by": null
+  },
+  {
+    "id": "2026-09-06-aimm-local-clone-is-shared-live-across-concurrent-agent-sessions-checkouts-race",
+    "date": "2026-09-06",
+    "title": "aimm local clone is shared live across concurrent agent sessions — checkouts race",
+    "fix": "Confirmed with `git branch --show-current` + `git status --short` + `git reflog` before every git-changing action once concurrent activity is suspected (unexpected file diffs, `git status` showing changes you didn't make, `git log --oneline` showing a HEAD you didn't set). If you must switch branches and the working tree is dirty with content you don't recognize as your own, stash it with a message identifying it as not-yours and leave it in the stash list rather than trying to restore it onto the other branch yourself — a concurrent session may still be mid-edit on disk. Always re-verify `git log origin/<branch>` right before pushing (not just at task start) since `origin/main` can move mid-task from another session's merges.",
+    "confirmed_via": "mid-task on the Fix Queue stuck-placeholder fix, `git status`/`git reflog` showed",
+    "tags": [
+      "aimm",
+      "git",
+      "shared-clone",
+      "concurrent-sessions",
+      "markey",
+      "race-condition"
+    ],
+    "source_run": "2026-09-06 Fix Queue \"Analysing…\" stuck-placeholder safety-net fix (branch",
+    "status": "active",
+    "superseded_by": null
   }
 ]
