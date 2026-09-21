@@ -59,3 +59,25 @@ appended, commit `f6b9546`), plus dated entries in `docs/STATUS.md`, `docs/ROADM
   single line, no terminators); switching to `-F` fixed it immediately, no other change. Worth treating
   as a blanket rule for `gh api` + base64 content on this machine: always `-F`, never `-f`, regardless
   of which contents/git endpoint is being called.
+
+## Update — 2026-09-21, later same day (Cat): APPROVED, Kevin: "we will implement this"
+
+Kevin decided to build this same day, after the feasibility research above. Not a proposal anymore —
+committed to build. Docs-only status update pushed to `main` @ `ee4159d`: `docs/ROADMAP.md` item 34
+(retitled to "AIMM stem separation — cloud backend + RunPod serverless Demucs worker", APPROVED
+banner), `DASHBOARD.html` card 34 (badge changed from "Backlog" to "APPROVED — not started", new
+dated entry), `docs/STATUS.md` (new top entry), `docs/RUNPOD-GPU-RESEARCH-BRIEF.md` (status line +
+appended decision note). All prior research/history text kept, not deleted — same pattern as the
+"Proposal A retracted, not deleted" convention already used in this brief.
+
+**Durable facts for whichever session builds this:**
+- Priority position is unchanged by the approval — still behind the Hope-intelligence backlog (items
+  24/25) in the roadmap queue. Approval ≠ reprioritization; don't assume it jumped the queue without
+  Kevin saying so explicitly.
+- Per standing process, implementation goes through Codex as lead implementer next, Cat reviews — this
+  session did docs only, no code, no pod, no spend. Don't start building index.html/backend code from
+  a docs-update task without that explicit handoff.
+- The scoped architecture (auth, R2 presigned upload, Worker → RunPod `/run` → D1/KV job tracking,
+  result delivery to R2, storage retention, usage ledger from day one, RunPod serverless Demucs worker
+  on RTX 4090/A5000) is unchanged by this approval — it's the same plan from the revised findings
+  above, just now greenlit rather than proposed.
