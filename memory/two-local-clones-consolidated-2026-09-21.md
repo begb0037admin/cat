@@ -60,3 +60,21 @@ Desktop redirection, and a standalone `.bat`-resolution test (`cmd.exe /c` again
 copy of the fixed path-resolution line). Commits `f012686` (script fix) and `f8892b4`
 (HANDOVER/STATUS docs) pushed to `begb0037admin/ai-news-channel` main.
 date: 2026-09-21
+
+## Addendum — third clone found and removed (same day, Kevin approved: "yes go ahead and sort it")
+
+- A clone-hunt driven only by Desktop shortcuts and a filename-filtered grep MISSED a third full clone
+  (`C:\Users\admin\github\Codex\Projects\ai-news-channel`, plus worktrees) — it surfaced only from a repo-content
+  grep. Enumerate clones by `origin` remote URL across every plausible root (`git remote get-url origin` on each dir
+  containing `.git`), and run `git worktree list` in each, not just by known paths.
+- Worktree `.git` files are pointers (`gitdir: <other clone>/.git/worktrees/<name>`); deleting a parent clone orphans its
+  worktrees (`fatal: not a git repository`). Check each worktree's pointer target before deleting anything.
+- Before deleting ANY clone, check more than main + working tree: `git log --branches --not --remotes` (unpushed commits on
+  any local branch), `git stash list`, `git ls-files --others` AND `--others -i` (untracked plus gitignored). Here that found
+  ~6.4 GB of gitignored-only media. I skipped the branch/stash check on the first clone deleted that day — record: not
+  proven lossless.
+- Consolidate by `mv` (same-volume rename, instant) into the surviving clone under a gitignored recovery folder
+  (`99_Archive/recovered-from-...`), byte-compare (`cmp`) anything claimed to be a duplicate first, save an uncommitted
+  worktree diff as a patch before `git worktree remove --force`.
+- A CRLF-only difference between a worktree and its commit shows as "differs" in `diff -rq`; confirm with
+  `diff --strip-trailing-cr` before treating it as real edits.
