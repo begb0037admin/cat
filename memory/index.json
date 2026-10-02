@@ -81,7 +81,26 @@
       "markey",
       "race-condition"
     ],
-    "source_run": "2026-09-06 Fix Queue \"Analysing…\" stuck-placeholder safety-net fix (branch",
+    "source_run": "2026-09-06 Fix Queue \"Analysing...\" stuck-placeholder safety-net fix (branch",
+    "status": "active",
+    "superseded_by": null
+  },
+  {
+    "id": "2026-10-02-webfetch-blocked-domains-and-bing-rjina-fallback-for-live-news-verification",
+    "date": "2026-10-02",
+    "title": "WebFetch is blocked outright on reuters.com/apnews.com/theguardian.com in this environment; cbsnews.com works directly; r.jina.ai-proxied Bing News search is the working fallback for finding and dating a breaking-news claim",
+    "fix": "When a Lane 2 script needs a live claim re-verified (e.g. a summit outcome, a regulatory announcement) and the obvious primary/wire sources aren't directly reachable: WebFetch to reuters.com, apnews.com, and theguardian.com all return 'Claude Code is unable to fetch from <domain>' in this environment — treat these as outright blocked, not worth retrying. cbsnews.com fetches reliably, both for its own search/section pages and for individual article URLs, and returns full article text including direct quotes. Plain Google search URLs (google.com/search?q=...) redirect to consent.google.com and fail. html.duckduckgo.com/html/ returns a literal CAPTCHA challenge page (consistent with the prior 26 Aug 2026 finding — this is a standing block, not transient). The working fallback for finding real headlines/snippets/publishers/dates/URLs without a dedicated search tool: WebFetch a Bing News search URL through the r.jina.ai proxy, i.e. `https://r.jina.ai/https://www.bing.com/news/search?q=<url-encoded query>` — this reliably returns real aggregated results (title, snippet, relative date, and often the exact source URL), which can then be fetched directly if that specific publisher's domain isn't itself on the blocked list. Iterating the query wording (adding site-specific terms, exact phrases) across 2-3 calls was needed to surface an actual fetchable URL rather than just a snippet.",
+    "confirmed_via": "ai-news-channel LANE2_02/03/04 script review task, 2 Oct 2026: direct WebFetch to https://www.reuters.com/world/china/ and https://apnews.com/hub/china both returned 'Claude Code is unable to fetch from <domain>'; https://www.theguardian.com/us-news/2026/sep/30/trump-ai-accord-spelling-error returned the same error; https://www.google.com/search?q=... returned a 302 to consent.google.com which could not be completed; https://html.duckduckgo.com/html/?q=... returned a page described as 'a CAPTCHA challenge... select squares containing ducks'; https://www.cbsnews.com/news/trump-xi-us-china-ai-trade-summit/ fetched successfully on the first try and returned full article text with named, dated, directly-quoted content (verified against the task's own cross-checks); https://r.jina.ai/https://www.bing.com/news/search?q=... succeeded across four separate queries in the same session and was what surfaced the working CBS News URL plus corroborating LA Times/AP-style snippets for a claim that could not be traced to a single fully-open primary article.",
+    "tags": [
+      "webfetch",
+      "blocked-domains",
+      "web-search-fallback",
+      "ai-news-channel",
+      "source-verification",
+      "r-jina-ai",
+      "bing-news"
+    ],
+    "source_run": "Cat task 2026-10-02 — LANE2_02 signatory re-check, LANE2_03 Trump-Xi summit rewrite, new LANE2_04 White House AI accord script",
     "status": "active",
     "superseded_by": null
   }
