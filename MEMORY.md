@@ -560,3 +560,4 @@ irect evidence), CapCut globalSetting is INI
 not JSON, one Codex self-report claim caught 
 false on re-verification
 - [LANE2_02/03/04 script review](memory/lane2-02-03-04-review-2026-10-02.md) -- 2 October 2026, LANE2_02 signatory re-check (unchanged), LANE2_03 rewritten for Trump-Xi summit outcome, new LANE2_04 merging accord-candidates 2+3; already-LOCKED status handling, partial-primary-source verification pattern, WebFetch blocked-domain list
+- [YouTube Shorts voice-rule jargon review](memory/youtube-shorts-voice-rule-jargon-review-2026-10-04.md) -- 4 October 2026, "explain it like you're 10" rule applied across LANE2_01 (propose-only, published), 02/03/09 (edit directly, only 02 had a real gap), 04-08 (flag-only); judge by whether a 10-year-old gets the surprise, not a strict word-for-word definition; flags C:\ clone back despite HANDOVER saying it was deleted, D:\ clone stale 12 commits behind on a feature branch
